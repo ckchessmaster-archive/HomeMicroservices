@@ -1,0 +1,13 @@
+version: "3.6"
+services:
+  nginx:
+    container_name: nginx
+    build: ./nginx
+  mongodb:
+    container_name: mongodb
+    image: mongo:3.7.9-xenial
+    ports:
+      - "5672:5672"
+  login-api:
+    container_name: login-api
+    build: ./login
