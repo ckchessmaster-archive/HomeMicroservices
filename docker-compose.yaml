@@ -3,6 +3,8 @@ services:
   nginx:
     container_name: nginx
     build: ./nginx
+    ports:
+      - "9494:9494"
   mongodb:
     container_name: mongodb
     image: mongo:3.7.9-xenial
@@ -10,4 +12,11 @@ services:
       - "5672:5672"
   login-api:
     container_name: login-api
-    build: ./login
+    build:
+      context: ./login-api
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./login-api:/app:rw
+      - node_modules-login-api:/app/node_modules/
+volumes:
+  node_modules-login-api:

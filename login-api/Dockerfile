@@ -2,6 +2,6 @@ FROM node:10.4.0-alpine
 
 WORKDIR /app
 COPY package*.json ./
-npm install
+RUN npm install
 
-npm start
+CMD npm start
