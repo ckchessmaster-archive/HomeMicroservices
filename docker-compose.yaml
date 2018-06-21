@@ -10,13 +10,13 @@ services:
     image: mongo:3.7.9-xenial
     ports:
       - "5672:5672"
-  login-api:
-    container_name: login-api
+  login-service:
+    container_name: login-service
     build:
-      context: ./login-api
+      context: ./login-service
       dockerfile: dev.Dockerfile
     volumes:
-      - ./login-api:/app:rw
-      - node_modules-login-api:/app/node_modules/
+      - ./login-service:/app:rw
+      - node_modules-login-service:/app/node_modules/
 volumes:
-  node_modules-login-api:
+  node_modules-login-service:
