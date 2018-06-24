@@ -9,7 +9,7 @@ services:
     container_name: mongodb
     image: mongo:3.7.9-xenial
     ports:
-      - "5672:5672"
+      - "27017:27017"
   login-service:
     container_name: login-service
     build:

@@ -2,6 +2,7 @@ const express = require('express');
 const routes = require('./routes');
 const config = require('./config');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -20,6 +21,7 @@ async function start() {
 
   //start main application
   console.log('Starting express server...');
+  app.use(bodyParser.json());
   app.use('/', routes);
   app.listen(config.port, config.host, () => console.log('Login API listening on port 9494!'));
 }
