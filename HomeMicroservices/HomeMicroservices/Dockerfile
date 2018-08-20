@@ -1,0 +1,20 @@
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
+WORKDIR /app
+EXPOSE 1801
+EXPOSE 44387
+
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /src
+COPY ["HomeMicroservices/HomeMicroservices.csproj", "HomeMicroservices/"]
+RUN dotnet restore "HomeMicroservices/HomeMicroservices.csproj"
+COPY . .
+WORKDIR "/src/HomeMicroservices"
+RUN dotnet build "HomeMicroservices.csproj" -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish "HomeMicroservices.csproj" -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "HomeMicroservices.dll"]
