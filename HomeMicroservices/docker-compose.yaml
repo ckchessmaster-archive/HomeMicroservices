@@ -1,7 +1,7 @@
 version: "3.6"
 services:
     mongodb:
-    container_name: mongodb
+       container_name: mongodb
        image: mongodb:latest
        ports:
           - "27017:27017"
