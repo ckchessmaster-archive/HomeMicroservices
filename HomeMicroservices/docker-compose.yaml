@@ -2,6 +2,6 @@ version: "3.6"
 services:
     mongodb:
     container_name: mongodb
-       image: mongo:3.7.9-xenial
+       image: mongodb:latest
        ports:
           - "27017:27017"
