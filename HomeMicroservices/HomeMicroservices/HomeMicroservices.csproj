@@ -3,13 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <UserSecretsId>aa82e593-dd30-4038-b914-3e0623b7d494</UserSecretsId>
+    <UserSecretsId>d98e38aa-12c1-40de-ba2a-b6e85651e4c5</UserSecretsId>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Shared\" />
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
