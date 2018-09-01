@@ -9,10 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HomeMicroservices.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
-        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -32,7 +30,6 @@ namespace HomeMicroservices.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
@@ -42,6 +39,12 @@ namespace HomeMicroservices.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public IActionResult Dashboard()
+        {
+            return View();
         }
     }
 }

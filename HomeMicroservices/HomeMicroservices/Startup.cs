@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HomeMicroservices.Factories;
+using HomeMicroservices.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -35,10 +37,15 @@ namespace HomeMicroservices
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Dependancy injection
+            services.AddSingleton<MongoDataService>();
+            services.AddSingleton<InventoryTemplateFactory>();
+            services.AddScoped<InventoryTemplateService>();
+
+            // Auth
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                //options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
             })
             .AddOpenIdConnect(options =>
