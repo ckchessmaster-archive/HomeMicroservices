@@ -1,3 +1,6 @@
+# Custom
+appsettings.development.json
+
 *.swp
 *.*~
 project.lock.json
@@ -32,3 +35,4 @@ msbuild.wrn
 
 # Visual Studio 2015
 .vs/
+
