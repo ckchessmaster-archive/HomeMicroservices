@@ -46,5 +46,18 @@ namespace HomeMicroservices.Controllers
         {
             return View(await this.inventoryService.GetByID(id));
         }
+
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            return View(await this.inventoryService.GetByID(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Inventory model)
+        {
+            bool result = await this.inventoryService.Update(model);
+
+            return RedirectToAction("Index");
+        }
     }
 }

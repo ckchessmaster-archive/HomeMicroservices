@@ -28,7 +28,7 @@ namespace HomeMicroservices.Services
             return await factory.Create(model);
         }
 
-        protected TModel InitializeModelForCreate(TModel model)
+        protected virtual TModel InitializeModelForCreate(TModel model)
         {
             var modelBase = model as ModelBase;
             modelBase.ModelID = Guid.NewGuid();
@@ -40,24 +40,35 @@ namespace HomeMicroservices.Services
             return model;
         }
 
-        public async Task<bool> Delete(Guid id)
+        public virtual async Task<bool> Delete(Guid id)
         {
             return await this.factory.Delete(id);
         }
 
-        public async Task<ICollection<TModel>> GetAll()
+        public virtual async Task<ICollection<TModel>> GetAll()
         {
             return await this.factory.GetAll();
         }
 
-        public async Task<TModel> GetByID(Guid id)
+        public virtual async Task<TModel> GetByID(Guid id)
         {
             return await this.factory.GetByID(id);
         }
 
-        public async Task<bool> Update(TModel model)
+        public virtual async Task<bool> Update(TModel model)
         {
+            model = InitializeModelForUpdate(model);
+
             return await this.factory.Update(model);
+        }
+
+        protected virtual TModel InitializeModelForUpdate(TModel model)
+        {
+            var modelBase = model as ModelBase;
+            modelBase.UpdateUser = httpContext.User.Claims.Where(c => c.Type.Equals(USERID_CLAIM)).FirstOrDefault().Value;
+            modelBase.UpdateDate = DateTime.Now;
+
+            return model;
         }
     }
 }

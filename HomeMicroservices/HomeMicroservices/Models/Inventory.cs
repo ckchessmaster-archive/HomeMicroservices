@@ -1,9 +1,5 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HomeMicroservices.Models
 {
@@ -17,8 +13,5 @@ namespace HomeMicroservices.Models
 
         [BsonElement("SharedGroups")]
         public BsonDocument SharedGroups { get; set; }
-
-        [BsonElement("Items")]
-        public ICollection<InventoryItem> Items { get; set; }
     }
 }

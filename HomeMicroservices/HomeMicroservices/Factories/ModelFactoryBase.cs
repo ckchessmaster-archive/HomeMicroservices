@@ -18,14 +18,14 @@ namespace HomeMicroservices.Factories
             this.collection = dataService.MongoDatabase.GetCollection<TModel>(typeof(TModel).Name);
         }
 
-        public async Task<bool> Create(TModel model)
+        public virtual async Task<bool> Create(TModel model)
         {
             await this.collection.InsertOneAsync(model);
 
             return true;
         }
 
-        public async Task<bool> Delete(Guid id)
+        public virtual async Task<bool> Delete(Guid id)
         {
             var result = await this.collection.DeleteOneAsync(new BsonDocument
             {
@@ -35,13 +35,13 @@ namespace HomeMicroservices.Factories
             return result.IsAcknowledged;
         }
 
-        public async Task<ICollection<TModel>> GetAll()
+        public virtual async Task<ICollection<TModel>> GetAll()
         {
             var cursor = await collection.FindAsync(new BsonDocument());
             return await cursor.ToListAsync();
         }
 
-        public async Task<TModel> GetByID(Guid id)
+        public virtual async Task<TModel> GetByID(Guid id)
         {
             var cursor = await collection.FindAsync(new BsonDocument
             {
@@ -51,15 +51,14 @@ namespace HomeMicroservices.Factories
             return await cursor.FirstAsync();
         }
 
-        public async Task<bool> Update(TModel model)
+        public virtual async Task<bool> Update(TModel model)
         {
-            var result = await this.collection.UpdateOneAsync(new BsonDocument
+            var result = await this.collection.FindOneAndReplaceAsync(new BsonDocument
             {
-                {"_id", (model as ModelBase).ModelID }
-            }, new BsonDocument { });
+                {  "_id", (model as ModelBase).ModelID }
+            }, model);
 
-            return result.IsAcknowledged;
+            return result != null ? true : false;
         }
-
     }
 }
