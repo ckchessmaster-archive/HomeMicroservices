@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace HomeMicroservices.Models
 {
-    public class InventoryTemplate
+    public class ModelBase
     {
         [BsonId]
-        public string InventoryTemplateID { get; set; }
+        public Guid ModelID { get; set; }
 
         [BsonElement("Name")]
         public string Name { get; set; }
@@ -18,22 +17,16 @@ namespace HomeMicroservices.Models
         [BsonElement("Description")]
         public string Description { get; set; }
 
-        [BsonElement("UserID")]
-        public string UserID { get; set; }
+        [BsonElement("CreateUser")]
+        public string CreateUser { get; set; }
 
         [BsonElement("CreateDate")]
         public DateTime CreateDate { get; set; }
 
+        [BsonElement("UpdateUser")]
+        public string UpdateUser { get; set; }
+
         [BsonElement("UpdateDate")]
         public DateTime UpdateDate { get; set; }
-
-        [BsonElement("Fields")]
-        public BsonDocument Fields { get; set; }
-
-        [BsonElement("Sort")]
-        public BsonDocument Sort { get; set; }
-
-        [BsonElement("SharedGroups")]
-        public BsonDocument SharedGroups { get; set; }
     }
 }

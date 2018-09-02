@@ -9,25 +9,23 @@ using System.Threading.Tasks;
 
 namespace HomeMicroservices.Factories
 {
-    public class InventoryTemplateFactory : IModelFactory<InventoryTemplate>
+    public class ModelFactoryBase<TModel> : IModelFactory<TModel>
     {
-        private const string COLLECTION_NAME = "InventoryTemplate";
+        private readonly IMongoCollection<TModel> collection;
 
-        private readonly IMongoCollection<InventoryTemplate> collection;
-
-        public InventoryTemplateFactory(MongoDataService dataService)
+        public ModelFactoryBase(MongoDataService dataService)
         {
-            this.collection = dataService.GetMongoDatabase().GetCollection<InventoryTemplate>(COLLECTION_NAME);
+            this.collection = dataService.MongoDatabase.GetCollection<TModel>(typeof(TModel).Name);
         }
 
-        public async Task<bool> Create(InventoryTemplate model)
+        public async Task<bool> Create(TModel model)
         {
             await this.collection.InsertOneAsync(model);
 
             return true;
         }
 
-        public async Task<bool> Delete(string id)
+        public async Task<bool> Delete(Guid id)
         {
             var result = await this.collection.DeleteOneAsync(new BsonDocument
             {
@@ -37,13 +35,13 @@ namespace HomeMicroservices.Factories
             return result.IsAcknowledged;
         }
 
-        public async Task<ICollection<InventoryTemplate>> GetAll()
+        public async Task<ICollection<TModel>> GetAll()
         {
             var cursor = await collection.FindAsync(new BsonDocument());
             return await cursor.ToListAsync();
         }
 
-        public async Task<InventoryTemplate> GetByID(string id)
+        public async Task<TModel> GetByID(Guid id)
         {
             var cursor = await collection.FindAsync(new BsonDocument
             {
@@ -53,14 +51,15 @@ namespace HomeMicroservices.Factories
             return await cursor.FirstAsync();
         }
 
-        public async Task<bool> Update(InventoryTemplate model)
+        public async Task<bool> Update(TModel model)
         {
             var result = await this.collection.UpdateOneAsync(new BsonDocument
             {
-                {"_id", model.InventoryTemplateID }
+                {"_id", (model as ModelBase).ModelID }
             }, new BsonDocument { });
 
             return result.IsAcknowledged;
         }
+
     }
 }

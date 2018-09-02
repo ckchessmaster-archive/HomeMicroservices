@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HomeMicroservices.Factories;
+using HomeMicroservices.Models;
 using HomeMicroservices.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace HomeMicroservices
@@ -38,9 +40,10 @@ namespace HomeMicroservices
             });
 
             // Dependancy injection
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<MongoDataService>();
-            services.AddSingleton<InventoryTemplateFactory>();
-            services.AddScoped<InventoryTemplateService>();
+            services.AddScoped<IModelFactory<Inventory>, ModelFactoryBase<Inventory>>();
+            services.AddScoped<IModelService<Inventory>, ModelServiceBase<Inventory>>();
 
             // Auth
             services.AddAuthentication(options =>
