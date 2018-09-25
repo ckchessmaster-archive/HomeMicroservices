@@ -6,14 +6,28 @@ $(document).ready(function () {
 });
 
 function addFieldButtonClicked() {
-    $('#FieldListHeaders').append($('<th id="FieldHeader_' + currentIndex + '"><input type="text" id="Fields_' + currentIndex + '_Name" name="Fields[' + currentIndex + '].Name" placeholder="Field Name"/></th>'));
-    $('#FieldListBody').append($('<td id="FieldType_' + currentIndex + '"><input type="text" id="Fields_' + currentIndex + '_Type" name="Fields[' + currentIndex + '].Type" placeholder="Field Type"/></td > '));
+    $('#FieldListHeaders').append(
+        $('<th id="FieldHeader_' + currentIndex + '">' +
+            '<input type="text" id="Fields_' + currentIndex + '_Name" name="Fields[' + currentIndex + '].Name" placeholder="Field Name" class="form-control" />' +
+        '</th > '));
+
+    fieldListType = $('<td id="FieldType_' + currentIndex + '"></td >');
+    fieldListType.append(getFieldTypeSelect(currentIndex));
+    $('#FieldListTypes').append(fieldListType);
 
     removeFieldButton = $('<td id="RemoveFieldButton_' + currentIndex + '"><a href="JavaScript:void(0)">Remove Field</a></td>');
     removeFieldButton.on(events = 'click', data = { index: currentIndex }, handler=removeFieldButtonClicked);
     $('#FieldListRemoveButtons').append(removeFieldButton);
 
     currentIndex++;
+}
+
+function getFieldTypeSelect(index) {
+    select = $('<select id="Fields_' + index + '_Type" name="Fields[' + index + '].Type" class="form-control"></select>');
+    select.append($('<option value="text">Text</select>'));
+    select.append($('<option value="number">Number</select>'));
+
+    return select;
 }
 
 function removeFieldButtonClicked(event) {
