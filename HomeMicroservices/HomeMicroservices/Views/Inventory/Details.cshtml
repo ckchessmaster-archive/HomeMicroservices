@@ -1,48 +1,51 @@
-﻿@model HomeMicroservices.Models.Inventory
+﻿@model HomeMicroservices.Models.ViewModels.InventoryDetailView
+@using MongoDB.Bson;
 
 <div>
     <h4>Inventory</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Inventory.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Inventory.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Inventory.Description)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateUser)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreateUser)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreateDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CreateDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdateUser)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UpdateUser)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.UpdateDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.UpdateDate)
+            @Html.DisplayFor(model => model.Inventory.Description)
         </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="AddItem">Add Item</a>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                @foreach (InventoryField field in Model.Inventory.Fields)
+                {
+                    <th>@field.Name</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (InventoryItem item in Model.Items)
+            {
+                <tr>
+                    @foreach (BsonElement element in item.Data)
+                    {
+                        <td>@element.Value</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Inventory.ModelID }) |
     <a asp-action="Index">Back to List</a>
 </div>

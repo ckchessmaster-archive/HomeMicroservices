@@ -1,4 +1,5 @@
 ﻿using HomeMicroservices.Models;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace HomeMicroservices.Services
 {
     public interface IModelService<TModel>
     {
-        Task<ICollection<TModel>> GetAll();
+        Task<ICollection<TModel>> GetAll(BsonDocument filter = null);
         Task<TModel> GetByID(Guid id);
         Task<bool> Create(TModel data);
         Task<bool> Update(TModel data);

@@ -1,4 +1,8 @@
 ﻿@model HomeMicroservices.Models.Inventory
+@section Scripts
+{
+    <script src="@Url.Content("~/js/Inventory.js")"></script>
+}
 
 <h4>Inventory</h4>
 <hr />
@@ -17,6 +21,21 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Fields" class="control-label"></label>
+                <div>
+                    <a id="AddFieldButton" href="JavaScript:void(0)">Add Field</a>
+                </div>
+                <table id="FieldList" class="table">
+                    <thead>
+                        <tr id="FieldListHeaders"></tr>
+                    </thead>
+                    <tbody>
+                        <tr id="FieldListBody"></tr>
+                        <tr id="FieldListRemoveButtons"></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </form>
@@ -26,4 +45,3 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-

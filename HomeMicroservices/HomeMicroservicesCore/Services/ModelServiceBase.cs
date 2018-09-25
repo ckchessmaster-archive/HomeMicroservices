@@ -1,6 +1,7 @@
 ﻿using HomeMicroservices.Factories;
 using HomeMicroservices.Models;
 using Microsoft.AspNetCore.Http;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +46,9 @@ namespace HomeMicroservices.Services
             return await this.factory.Delete(id);
         }
 
-        public virtual async Task<ICollection<TModel>> GetAll()
+        public virtual async Task<ICollection<TModel>> GetAll(BsonDocument filter = null)
         {
-            return await this.factory.GetAll();
+            return await this.factory.GetAll(filter);
         }
 
         public virtual async Task<TModel> GetByID(Guid id)

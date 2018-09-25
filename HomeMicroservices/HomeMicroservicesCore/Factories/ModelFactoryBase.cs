@@ -35,9 +35,9 @@ namespace HomeMicroservices.Factories
             return result.IsAcknowledged;
         }
 
-        public virtual async Task<ICollection<TModel>> GetAll()
+        public virtual async Task<ICollection<TModel>> GetAll(BsonDocument filter = null)
         {
-            var cursor = await collection.FindAsync(new BsonDocument());
+            var cursor = await collection.FindAsync(filter ?? new BsonDocument());
             return await cursor.ToListAsync();
         }
 

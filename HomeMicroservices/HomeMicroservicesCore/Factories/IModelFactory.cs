@@ -7,7 +7,7 @@ namespace HomeMicroservices.Factories
 {
     public interface IModelFactory<TModel>
     {
-        Task<ICollection<TModel>> GetAll();
+        Task<ICollection<TModel>> GetAll(BsonDocument filter = null);
         Task<TModel> GetByID(Guid id);
         Task<bool> Create(TModel model);
         Task<bool> Update(TModel model);

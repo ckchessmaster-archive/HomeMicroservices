@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using HomeMicroservices.Models;
+using HomeMicroservices.Models.ViewModels;
 using HomeMicroservices.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace HomeMicroservices.Controllers
 {
@@ -11,10 +14,12 @@ namespace HomeMicroservices.Controllers
     public class InventoryController : Controller
     {
         private readonly IModelService<Inventory> inventoryService;
+        private readonly IModelService<InventoryItem> itemService;
 
-        public InventoryController(IModelService<Inventory> inventoryService)
+        public InventoryController(IModelService<Inventory> inventoryService, IModelService<InventoryItem> itemService)
         {
             this.inventoryService = inventoryService;
+            this.itemService = itemService;
         }
 
         public async Task<IActionResult> Index()
@@ -44,7 +49,14 @@ namespace HomeMicroservices.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            return View(await this.inventoryService.GetByID(id));
+            var inventory = this.inventoryService.GetByID(id);
+            var items = this.itemService.GetAll(new BsonDocument { { "InventoryID", id } });
+
+            return View(new InventoryDetailView
+            {
+                Inventory = await inventory,
+                Items = (await items).ToList()
+            });
         }
 
         public async Task<IActionResult> Edit(Guid id)
@@ -58,6 +70,11 @@ namespace HomeMicroservices.Controllers
             bool result = await this.inventoryService.Update(model);
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult GetAddFieldModal()
+        {
+            return PartialView();
         }
     }
 }
