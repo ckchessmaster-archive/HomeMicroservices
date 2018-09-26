@@ -6,7 +6,6 @@ EXPOSE 44370
 FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /src
 COPY ["InventoryAPI/InventoryAPI.csproj", "InventoryAPI/"]
-COPY ["HomeMicroservicesCore/HomeMicroservicesCore.csproj", "HomeMicroservicesCore/"]
 RUN dotnet restore "InventoryAPI/InventoryAPI.csproj"
 COPY . .
 WORKDIR "/src/InventoryAPI"

@@ -71,10 +71,5 @@ namespace HomeMicroservices.Controllers
 
             return RedirectToAction("Index");
         }
-
-        public IActionResult GetAddFieldModal()
-        {
-            return PartialView();
-        }
     }
 }
