@@ -60,6 +60,7 @@ namespace HomeMicroservices
                 options.Authority = Configuration["Authentication:Google:Authority"];
                 options.ResponseType = OpenIdConnectResponseType.Code;
                 options.GetClaimsFromUserInfoEndpoint = true;
+                options.SaveTokens = true;
             })
             .AddCookie();
 

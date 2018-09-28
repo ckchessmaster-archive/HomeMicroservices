@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HomeMicroservices.Models;
 using HomeMicroservices.Models.ViewModels;
 using HomeMicroservices.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -24,6 +25,8 @@ namespace HomeMicroservices.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var test = await this.HttpContext.GetTokenAsync("id_token");
+            var test2 = await this.HttpContext.GetTokenAsync("access_token");
             return View(await this.inventoryService.GetAll());
         }
 

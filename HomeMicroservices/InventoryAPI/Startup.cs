@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HomeMicroservices.Factories;
 using HomeMicroservices.Models;
 using HomeMicroservices.Services;
+using InventoryAPI.Security;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -43,6 +44,26 @@ namespace InventoryAPI
             services.AddScoped<IModelService<InventoryItem>, ModelServiceBase<InventoryItem>>();
 
             // Auth
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.SecurityTokenValidators.Clear();
+                options.SecurityTokenValidators.Add(new GoogleTokenValidator());
+            });
+            //.AddOpenIdConnect(options =>
+            //{
+            //    
+            //    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            //    options.Authority = Configuration["Authentication:Google:Authority"];
+            //    options.ResponseType = OpenIdConnectResponseType.Code;
+            //    options.GetClaimsFromUserInfoEndpoint = true;
+            //    options.SaveTokens = true;
+            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

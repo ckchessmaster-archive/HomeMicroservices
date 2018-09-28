@@ -13,6 +13,7 @@ namespace InventoryAPI.Controllers
 {
     [Route("inventory-api")]
     [ApiController]
+    [Authorize]
     public class InventoryController : ControllerBase
     {
         private readonly IModelService<Inventory> inventoryService;
