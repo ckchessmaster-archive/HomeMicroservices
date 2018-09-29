@@ -1,4 +1,4 @@
-﻿@model HomeMicroservices.Models.ViewModels.InventoryDetailView
+﻿@model HomeMicroservices.Models.Inventory
 @using MongoDB.Bson;
 
 <div>
@@ -6,16 +6,16 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Inventory.Name)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Inventory.Name)
+            @Html.DisplayFor(model => model.Name)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Inventory.Description)
+            @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Inventory.Description)
+            @Html.DisplayFor(model => model.Description)
         </dd>
     </dl>
 </div>
@@ -26,7 +26,7 @@
     <table class="table">
         <thead>
             <tr>
-                @foreach (InventoryField field in Model.Inventory.Fields)
+                @foreach (InventoryField field in Model.Fields)
                 {
                     <th>@field.Name</th>
                 }
@@ -46,6 +46,6 @@
     </table>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Inventory.ModelID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ModelID }) |
     <a asp-action="Index">Back to List</a>
 </div>

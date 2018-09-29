@@ -12,7 +12,7 @@ namespace HomeMicroservices.Services
         Task<ICollection<TModel>> GetAll(BsonDocument filter = null);
         Task<TModel> GetByID(Guid id);
         Task<bool> Create(TModel data);
-        Task<bool> Update(TModel data);
+        Task<bool> Update(Guid id, TModel data);
         Task<bool> Delete(Guid id);
     }
 }

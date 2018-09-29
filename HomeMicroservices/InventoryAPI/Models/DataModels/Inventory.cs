@@ -18,10 +18,18 @@ namespace HomeMicroservices.Models
         [BsonElement("SharedGroups")]
         public List<SharedGroup> SharedGroups { get; set; }
 
+        /// <summary>
+        /// A list of items associated with this inventory 
+        /// (this should be populated by a seperate service so we ignore it here)
+        /// </summary>
+        [BsonIgnore]
+        public List<InventoryItem> Items { get; set; }
+
         public Inventory()
         {
             this.Fields = new List<InventoryField>();
             this.SharedGroups = new List<SharedGroup>();
+            this.Items = new List<InventoryItem>();
         }
     }
 }

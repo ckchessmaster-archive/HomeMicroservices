@@ -16,6 +16,18 @@ namespace HomeMicroservices.Controllers
             return View();
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        public IActionResult AddCookie(string token)
+        {
+            HttpContext.Response.Cookies.Append("access_token", token);
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

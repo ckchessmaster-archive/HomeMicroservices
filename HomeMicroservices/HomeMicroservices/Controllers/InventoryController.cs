@@ -11,7 +11,6 @@ using MongoDB.Bson;
 
 namespace HomeMicroservices.Controllers
 {
-    [Authorize]
     public class InventoryController : Controller
     {
         private readonly IModelService<Inventory> inventoryService;
@@ -25,8 +24,6 @@ namespace HomeMicroservices.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var test = await this.HttpContext.GetTokenAsync("id_token");
-            var test2 = await this.HttpContext.GetTokenAsync("access_token");
             return View(await this.inventoryService.GetAll());
         }
 
@@ -52,14 +49,7 @@ namespace HomeMicroservices.Controllers
 
         public async Task<IActionResult> Details(Guid id)
         {
-            var inventory = this.inventoryService.GetByID(id);
-            var items = this.itemService.GetAll(new BsonDocument { { "InventoryID", id } });
-
-            return View(new InventoryDetailView
-            {
-                Inventory = await inventory,
-                Items = (await items).ToList()
-            });
+            return View(await this.inventoryService.GetByID(id));
         }
 
         public async Task<IActionResult> Edit(Guid id)
@@ -68,9 +58,9 @@ namespace HomeMicroservices.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Inventory model)
+        public async Task<IActionResult> Edit(Guid id, Inventory model)
         {
-            bool result = await this.inventoryService.Update(model);
+            bool result = await this.inventoryService.Update(id, model);
 
             return RedirectToAction("Index");
         }

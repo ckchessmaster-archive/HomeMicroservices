@@ -53,7 +53,6 @@ namespace InventoryAPI.Security
             {
                 Console.WriteLine(e);
                 throw;
-
             }
         }
     }

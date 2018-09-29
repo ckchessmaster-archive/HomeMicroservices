@@ -11,8 +11,6 @@ namespace HomeMicroservices.Services
 {
     public class ModelServiceBase<TModel> : IModelService<TModel>
     {
-        protected const string USERID_CLAIM = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
-
         IModelFactory<TModel> factory;
         private HttpContext httpContext;
 
@@ -33,7 +31,7 @@ namespace HomeMicroservices.Services
         {
             var modelBase = model as ModelBase;
             modelBase.ModelID = Guid.NewGuid();
-            modelBase.CreateUser = httpContext.User.Claims.Where(c => c.Type.Equals(USERID_CLAIM)).FirstOrDefault().Value;
+            modelBase.CreateUser = httpContext.User.Claims.Where(c => c.Type.Equals("sub")).FirstOrDefault().Value;
             modelBase.CreateDate = DateTime.Now;
             modelBase.UpdateUser = modelBase.CreateUser;
             modelBase.UpdateDate = modelBase.CreateDate;
@@ -56,7 +54,7 @@ namespace HomeMicroservices.Services
             return await this.factory.GetByID(id);
         }
 
-        public virtual async Task<bool> Update(TModel model)
+        public virtual async Task<bool> Update(Guid id, TModel model)
         {
             model = InitializeModelForUpdate(model);
 
@@ -66,7 +64,7 @@ namespace HomeMicroservices.Services
         protected virtual TModel InitializeModelForUpdate(TModel model)
         {
             var modelBase = model as ModelBase;
-            modelBase.UpdateUser = httpContext.User.Claims.Where(c => c.Type.Equals(USERID_CLAIM)).FirstOrDefault().Value;
+            modelBase.UpdateUser = httpContext.User.Claims.Where(c => c.Type.Equals("sub")).FirstOrDefault().Value;
             modelBase.UpdateDate = DateTime.Now;
 
             return model;

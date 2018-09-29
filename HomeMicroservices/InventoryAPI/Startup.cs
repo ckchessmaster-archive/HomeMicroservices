@@ -55,15 +55,6 @@ namespace InventoryAPI
                 options.SecurityTokenValidators.Clear();
                 options.SecurityTokenValidators.Add(new GoogleTokenValidator());
             });
-            //.AddOpenIdConnect(options =>
-            //{
-            //    
-            //    options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            //    options.Authority = Configuration["Authentication:Google:Authority"];
-            //    options.ResponseType = OpenIdConnectResponseType.Code;
-            //    options.GetClaimsFromUserInfoEndpoint = true;
-            //    options.SaveTokens = true;
-            //});
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

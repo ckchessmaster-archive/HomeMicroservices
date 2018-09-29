@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -61,21 +60,17 @@ namespace InventoryAPI.Controllers
         [Route("inventories/{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
-            var inventory = this.inventoryService.GetByID(id);
-            var items = this.itemService.GetAll(new BsonDocument { { "InventoryID", id } });
+            var inventory = await this.inventoryService.GetByID(id);
+            inventory.Items = (await this.itemService.GetAll(new BsonDocument { { "InventoryID", id } })).ToList();
 
-            return Ok(new InventoryDetailViewModel
-            {
-                Inventory = await inventory,
-                Items = (await items).ToList()
-            });
+            return Ok(inventory);
         }
 
         [HttpPost]
         [Route("inventories/{id}")]
         public async Task<IActionResult> Edit(Guid id, Inventory model)
         {
-            if(await this.inventoryService.Update(model))
+            if(await this.inventoryService.Update(id, model))
             {
                 return Ok();
             }

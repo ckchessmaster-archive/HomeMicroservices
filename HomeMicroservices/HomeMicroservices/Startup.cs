@@ -41,28 +41,10 @@ namespace HomeMicroservices
 
             // Dependancy injection
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<MongoDataService>();
-            services.AddScoped<IModelFactory<Inventory>, ModelFactoryBase<Inventory>>();
-            services.AddScoped<IModelService<Inventory>, ModelServiceBase<Inventory>>();
-            services.AddScoped<IModelFactory<InventoryItem>, ModelFactoryBase<InventoryItem>>();
+            services.AddHttpClient<IModelService<Inventory>, InventoryService>();
             services.AddScoped<IModelService<InventoryItem>, ModelServiceBase<InventoryItem>>();
-
-            // Auth
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            })
-            .AddOpenIdConnect(options =>
-            {
-                options.ClientId = Configuration["Authentication:Google:ClientId"];
-                options.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                options.Authority = Configuration["Authentication:Google:Authority"];
-                options.ResponseType = OpenIdConnectResponseType.Code;
-                options.GetClaimsFromUserInfoEndpoint = true;
-                options.SaveTokens = true;
-            })
-            .AddCookie();
+            services.AddScoped<IModelFactory<InventoryItem>, ModelFactoryBase<InventoryItem>>();
+            services.AddSingleton<MongoDataService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -84,7 +66,7 @@ namespace HomeMicroservices
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
