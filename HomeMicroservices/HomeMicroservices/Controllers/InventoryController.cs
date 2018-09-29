@@ -14,12 +14,10 @@ namespace HomeMicroservices.Controllers
     public class InventoryController : Controller
     {
         private readonly IModelService<Inventory> inventoryService;
-        private readonly IModelService<InventoryItem> itemService;
 
-        public InventoryController(IModelService<Inventory> inventoryService, IModelService<InventoryItem> itemService)
+        public InventoryController(IModelService<Inventory> inventoryService)
         {
             this.inventoryService = inventoryService;
-            this.itemService = itemService;
         }
 
         public async Task<IActionResult> Index()

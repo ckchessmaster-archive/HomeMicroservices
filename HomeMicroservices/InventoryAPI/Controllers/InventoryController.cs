@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace InventoryAPI.Controllers
 {
-    [Route("inventory-api")]
+    [Route("inventories")]
     [ApiController]
     [Authorize]
     public class InventoryController : ControllerBase
@@ -25,14 +25,14 @@ namespace InventoryAPI.Controllers
         }
 
         [HttpGet]
-        [Route("inventories")]
+        [Route("")]
         public async Task<IActionResult> GetInventoryList()
         {
             return Ok(await inventoryService.GetAll());
         }
 
         [HttpPost]
-        [Route("inventories/new")]
+        [Route("new")]
         public async Task<IActionResult> Create(Inventory model)
         {
             if(await this.inventoryService.Create(model))
@@ -45,7 +45,7 @@ namespace InventoryAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("inventories/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             if(await this.inventoryService.Delete(id))
@@ -57,7 +57,7 @@ namespace InventoryAPI.Controllers
         }
 
         [HttpGet]
-        [Route("inventories/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var inventory = await this.inventoryService.GetByID(id);
@@ -67,7 +67,7 @@ namespace InventoryAPI.Controllers
         }
 
         [HttpPost]
-        [Route("inventories/{id}")]
+        [Route("{id}")]
         public async Task<IActionResult> Edit(Guid id, Inventory model)
         {
             if(await this.inventoryService.Update(id, model))

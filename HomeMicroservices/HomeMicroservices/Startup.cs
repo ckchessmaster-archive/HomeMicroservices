@@ -42,9 +42,6 @@ namespace HomeMicroservices
             // Dependancy injection
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHttpClient<IModelService<Inventory>, InventoryService>();
-            services.AddScoped<IModelService<InventoryItem>, ModelServiceBase<InventoryItem>>();
-            services.AddScoped<IModelFactory<InventoryItem>, ModelFactoryBase<InventoryItem>>();
-            services.AddSingleton<MongoDataService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
