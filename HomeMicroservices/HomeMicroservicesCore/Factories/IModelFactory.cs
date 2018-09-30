@@ -8,9 +8,9 @@ namespace HomeMicroservices.Factories
     public interface IModelFactory<TModel>
     {
         Task<ICollection<TModel>> GetAll(BsonDocument filter = null);
-        Task<TModel> GetByID(Guid id);
+        Task<TModel> GetByID(BsonDocument filter);
         Task<bool> Create(TModel model);
-        Task<bool> Update(TModel model);
-        Task<bool> Delete(Guid id);
+        Task<bool> Update(BsonDocument filter, TModel model);
+        Task<bool> Delete(BsonDocument filter);
     }
 }

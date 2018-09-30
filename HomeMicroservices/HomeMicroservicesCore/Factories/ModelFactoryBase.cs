@@ -25,12 +25,9 @@ namespace HomeMicroservices.Factories
             return true;
         }
 
-        public virtual async Task<bool> Delete(Guid id)
+        public virtual async Task<bool> Delete(BsonDocument filter)
         {
-            var result = await this.collection.DeleteOneAsync(new BsonDocument
-            {
-                {"_id", id }
-            });
+            var result = await this.collection.DeleteOneAsync(filter);
 
             return result.IsAcknowledged;
         }
@@ -41,22 +38,16 @@ namespace HomeMicroservices.Factories
             return await cursor.ToListAsync();
         }
 
-        public virtual async Task<TModel> GetByID(Guid id)
+        public virtual async Task<TModel> GetByID(BsonDocument filter)
         {
-            var cursor = await collection.FindAsync(new BsonDocument
-            {
-                {"_id", id }
-            });
+            var cursor = await collection.FindAsync(filter);
 
             return await cursor.FirstAsync();
         }
 
-        public virtual async Task<bool> Update(TModel model)
+        public virtual async Task<bool> Update(BsonDocument filter, TModel model)
         {
-            var result = await this.collection.FindOneAndReplaceAsync(new BsonDocument
-            {
-                {  "_id", (model as ModelBase).ModelID }
-            }, model);
+            var result = await this.collection.FindOneAndReplaceAsync(filter, model);
 
             return result != null ? true : false;
         }
