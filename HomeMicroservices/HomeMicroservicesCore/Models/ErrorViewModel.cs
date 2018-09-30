@@ -1,6 +1,4 @@
-using System;
-
-namespace HomeMicroservices.Models
+namespace HomeMicroservicesCore.Models
 {
     public class ErrorViewModel
     {

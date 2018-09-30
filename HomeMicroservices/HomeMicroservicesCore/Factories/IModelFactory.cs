@@ -1,9 +1,8 @@
 ﻿using MongoDB.Bson;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HomeMicroservices.Factories
+namespace HomeMicroservicesCore.Factories
 {
     public interface IModelFactory<TModel>
     {

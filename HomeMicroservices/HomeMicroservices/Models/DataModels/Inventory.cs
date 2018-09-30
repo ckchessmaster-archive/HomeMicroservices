@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using HomeMicroservicesCore.Models;
 using System.Collections.Generic;
 
 namespace HomeMicroservices.Models

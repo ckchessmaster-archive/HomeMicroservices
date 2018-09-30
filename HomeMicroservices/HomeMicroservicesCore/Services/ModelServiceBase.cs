@@ -1,5 +1,5 @@
-﻿using HomeMicroservices.Factories;
-using HomeMicroservices.Models;
+﻿using HomeMicroservicesCore.Factories;
+using HomeMicroservicesCore.Models;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Bson;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HomeMicroservices.Services
+namespace HomeMicroservicesCore.Services
 {
     public class ModelServiceBase<TModel> : IModelService<TModel>
     {

@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace HomeMicroservices.Models
+namespace HomeMicroservicesCore.Models
 {
     public class ModelBase
     {

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using HomeMicroservices.Models;
-using HomeMicroservices.Models.ViewModels;
-using HomeMicroservices.Services;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+using HomeMicroservicesCore.Services;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Bson;
 
 namespace HomeMicroservices.Controllers
 {

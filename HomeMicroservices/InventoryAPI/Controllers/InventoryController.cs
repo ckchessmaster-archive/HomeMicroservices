@@ -1,6 +1,5 @@
 ﻿using HomeMicroservices.Models;
-using HomeMicroservices.Services;
-using InventoryAPI.Models.ViewModels;
+using HomeMicroservicesCore.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
