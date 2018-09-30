@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using HomeMicroservices.Models;
 using HomeMicroservicesCore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomeMicroservices.Controllers
 {
+    [Authorize]
     public class InventoryController : Controller
     {
         private readonly IModelService<Inventory> inventoryService;
